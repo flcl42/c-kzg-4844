@@ -32,7 +32,7 @@ jobs:
             reqs: sudo apt update && sudo apt install -y clang binutils-aarch64-linux-gnu libc6-arm64-cross libc6-dev-arm64-cross crossbuild-essential-arm64
           - arch: arm64-apple-macos11
             location: osx-arm64
-            host: macos-latest
+            host: macos-xlarge-latest
             ext: .dylib
             reqs:
           - arch: x86_64-darwin
@@ -54,7 +54,7 @@ jobs:
       if: ${{ matrix.target.reqs }}
       run: ${{ matrix.target.reqs }}
     - name: Build native library for ${{ matrix.target.location }} using native capabilities
-      run: make ckzg -C bindings/csharp CC=clang EXTENSION=${{matrix.target.ext}} LOCATION=${{matrix.target.location}} ARCH=${{matrix.target.arch}}
+      run: make ckzg -C bindings/csharp CC=clang EXTENSION=${{matrix.target.ext}} LOCATION=${{matrix.target.location}}
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
