@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Binding version override"
+        description: "Publish version"
   push:
     branches:
       - main
@@ -127,5 +127,5 @@ jobs:
         name: Ckzg.Bindings-${{ inputs.version || env.binding_build_number_based_version }}
         path: bindings/csharp/nupkgs/Ckzg.Bindings.*.nupkg
     - name: Publish .NET package
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/main' && inputs.version
       run: dotnet nuget push bindings/csharp/nupkgs/*.nupkg -k ${{ secrets.CSHARP_NUGET_APIKEY }} -s https://api.nuget.org/v3/index.json
